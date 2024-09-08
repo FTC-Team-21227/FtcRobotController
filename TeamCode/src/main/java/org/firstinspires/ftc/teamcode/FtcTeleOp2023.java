@@ -29,14 +29,14 @@ public class FtcTeleOp2023 extends LinearOpMode {
 
     Orientation Direction;
     float Heading_Angle;
-    int Motor_power_BR;
-    int Motor_power_BL;
+    double Motor_power_BR;
+    double Motor_power_BL;
     int imu_rotation;
     double Motor_fwd_power;
-    int Motor_power_FL;
+    double Motor_power_FL;
     float Targeting_Angle;
     double Motor_side_power;
-    int Motor_power_FR;
+    double Motor_power_FR;
     int Intake_Ang_Status;
     double Motor_Rotation_power;
     int Intake_Angle_Pos;
@@ -130,12 +130,12 @@ public class FtcTeleOp2023 extends LinearOpMode {
         W_FL = hardwareMap.get(DcMotor.class, "W_FL");
         W_BR = hardwareMap.get(DcMotor.class, "W_BR");
         W_BL = hardwareMap.get(DcMotor.class, "W_BL");
-        Lift = hardwareMap.get(DcMotor.class, "Lift");
+        /*Lift = hardwareMap.get(DcMotor.class, "Lift");
         Pull_Up = hardwareMap.get(DcMotor.class, "Pull_Up");
         Intake_Angle = hardwareMap.get(DcMotor.class, "Intake_Angle");
         Plane = hardwareMap.get(Servo.class, "Plane");
         Intake1 = hardwareMap.get(Servo.class, "Intake1");
-        Intake2 = hardwareMap.get(Servo.class, "Intake2");
+        Intake2 = hardwareMap.get(Servo.class, "Intake2");*/
         imu = hardwareMap.get(IMU.class, "imu");
 
         // Put initialization blocks here.
@@ -151,14 +151,14 @@ public class FtcTeleOp2023 extends LinearOpMode {
                 W_BR.setPower(Motor_power_BR);
                 W_FR.setPower(Motor_power_FR);
                 W_FL.setPower(Motor_power_FL);
-                Lift_Contol();
+                /*Lift_Contol();
                 Intake_Control();
                 Intake_Angle_Control();
-                artillerycannon();
+                artillerycannon();*/
                 if (gamepad2.dpad_right) {
                     imu.resetYaw();
                 }
-                telemetry.addData("Direction", Direction.firstAngle);
+                /*telemetry.addData("Direction", Direction.firstAngle);
                 telemetry.addData("Motor Power", Motor_Power);
                 telemetry.addData("Side Power", Motor_side_power);
                 telemetry.addData("FWD Power", Motor_fwd_power);
@@ -171,7 +171,7 @@ public class FtcTeleOp2023 extends LinearOpMode {
                 telemetry.addData("Intake1_Toggle", intake1toggle);
                 telemetry.addData("Intake2_Toggle", intake2toggle);
                 telemetry.addData("Plane Encoder", Plane.getPosition());
-                telemetry.update();
+                telemetry.update();*/
             }
         }
     }
@@ -201,10 +201,10 @@ public class FtcTeleOp2023 extends LinearOpMode {
             Motor_fwd_power = Math.cos(Heading_Angle / 180 * Math.PI) * Motor_FWD_input - Math.sin(Heading_Angle / 180 * Math.PI) * Motor_Side_input;
             Motor_side_power = (Math.cos(Heading_Angle / 180 * Math.PI) * Motor_Side_input + Math.sin(Heading_Angle / 180 * Math.PI) * Motor_FWD_input) * 1.5;
             Motor_Rotation_power = gamepad1.right_stick_x * 0.7 + imu_rotation;
-            Motor_power_BL = (int) -(((Motor_fwd_power - Motor_side_power) - Motor_Rotation_power) * Motor_Power);
-            Motor_power_BR = (int) -((Motor_fwd_power + Motor_side_power + Motor_Rotation_power) * Motor_Power);
-            Motor_power_FL = (int) -(((Motor_fwd_power + Motor_side_power) - Motor_Rotation_power) * Motor_Power);
-            Motor_power_FR = (int) (((Motor_fwd_power - Motor_side_power) + Motor_Rotation_power) * Motor_Power);
+            Motor_power_BL = -(((Motor_fwd_power - Motor_side_power) - Motor_Rotation_power) * Motor_Power);
+            Motor_power_BR = -((Motor_fwd_power + Motor_side_power + Motor_Rotation_power) * Motor_Power);
+            Motor_power_FL = -(((Motor_fwd_power + Motor_side_power) - Motor_Rotation_power) * Motor_Power);
+            Motor_power_FR = (((Motor_fwd_power - Motor_side_power) + Motor_Rotation_power) * Motor_Power);
         } else {
             Motor_power_BR = 0;
             Motor_power_BL = 0;
